@@ -8,7 +8,7 @@ app.use(express.json());
 
 async function loginToRoblox() {
   try {
-    const cookie = ${{secrets.COOKIE}};
+    const cookie = process.env.COOKIE;
     await noblox.setCookie(cookie);
     console.log("Logged into Roblox successfully.");
   } catch (error) {
