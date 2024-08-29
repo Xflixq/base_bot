@@ -38,9 +38,11 @@ client.once('ready', () => {
     console.log(`Logged in as ${client.user.tag}`);
 });
 
+// Bot Needed: https://discord.com/oauth2/authorize?client_id=1278140154787266612&permissions=2147559424&scope=bot%20applications.commands
+
 app.post('/discord', async (req, res) => {
     const { pn, bn, warningNo } = req.body;
-
+    const ping = process.env.PING
     try {
         playerName = pn
         breakerName = bn
@@ -51,7 +53,7 @@ app.post('/discord', async (req, res) => {
             content: '',
             embeds: [{
                 title: 'Moderator Call',
-                description: `Moderator called by: ${playerName}\nUsername of the rule breaker: ${breakerName}\nWarnings: ${warnings}\nPing: <@&1272252713224114207> \nStatus: Waiting :alarm_clock:`,
+                description: `Moderator called by: ${playerName}\nUsername of the rule breaker: ${breakerName}\nWarnings: ${warnings}\nPing: <@&${ping}> \nStatus: Waiting :alarm_clock:`,
                 color: 16711680,
             }],
             components: [{
