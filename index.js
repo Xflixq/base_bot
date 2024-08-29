@@ -1,21 +1,40 @@
+const express = require("express");
 const noblox = require("noblox.js");
 
-async function startApp() {
-  // Log in to Roblox
-  const cookie = ${{secrets.COOKIE}}
-  await noblox.setCookie(cookie);
+const app = express();
+const PORT = process.env.PORT || 3000;
 
+app.use(express.json());
+
+async function loginToRoblox() {
   try {
-    // Change the rank of a user in a group
-    const groupId = 34800228; // Replace with your group ID
-    const userId = 630778050; // Replace with the user's ID you want to rank
-    const newRank = -1; // Replace with the rank ID you want to assign
-
-    const rankChangeResult = await noblox.changeRank(groupId, userId, newRank);
-    console.log('Rank change result:', rankChangeResult);
+    const cookie = ${{secrets.COOKIE}};
+    await noblox.setCookie(cookie);
+    console.log("Logged into Roblox successfully.");
   } catch (error) {
-    console.error('An error occurred:', error);
+    console.error("Failed to log into Roblox:", error);
   }
 }
+app.post("/changeRank", async (req, res) => {
+  const { groupId, userId, newRank } = req.body;
 
-startApp().catch(console.error);
+  if (!groupId || !userId || !newRank) {
+    return res.status(400).send("Missing required parameters: groupId, userId, or newRank.");
+  }
+
+  try {
+    const rankChangeResult = await noblox.changeRank(groupId, userId, newRank);
+    res.json({
+      message: "Rank change successful",
+      result: rankChangeResult
+    });
+  } catch (error) {
+    console.error("An error occurred:", error);
+    res.status(500).send("An error occurred while changing the rank.");
+  }
+});
+
+app.listen(PORT, async () => {
+  console.log(`Server is running on port ${PORT}`);
+  await loginToRoblox();
+});
