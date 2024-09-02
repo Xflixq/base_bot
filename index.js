@@ -1,20 +1,36 @@
 const express = require("express");
 const noblox = require("noblox.js");
+const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const bodyParser = require('body-parser');
+const channelId = '1278080274869256288';
+const token = process.env.TOKEN;
+
+let playerName = ""
+let breakerName = ""
+let warnings = ""
 
 const app = express();
+app.use(bodyParser.json());
+app.use(express.json());
 const PORT = process.env.PORT || 3000;
 
-app.use(express.json());
+const client = new Client({
+  intents: [GatewayIntentBits.Guilds],
+  partials: [Partials.Message, Partials.Channel],
+});
+
 
 async function loginToRoblox() {
   try {
     const cookie = process.env.COOKIE;
+    console.log(cookie)
     await noblox.setCookie(cookie);
     console.log("Logged into Roblox successfully.");
   } catch (error) {
     console.error("Failed to log into Roblox:", error);
   }
 }
+
 app.post("/changeRank", async (req, res) => {
   const { groupId, userId, newRank } = req.body;
 
@@ -40,7 +56,7 @@ client.once('ready', () => {
 
 // Bot Needed: https://discord.com/oauth2/authorize?client_id=1278140154787266612&permissions=2147559424&scope=bot%20applications.commands
 
-app.post('/discord', async (req, res) => {
+app.post('/sendModCall', async (req, res) => {
     const { pn, bn, warningNo } = req.body;
     const ping = process.env.PING
     try {
@@ -93,4 +109,5 @@ client.on('interactionCreate', async interaction => {
 app.listen(PORT, async () => {
   console.log(`Server is running on port ${PORT}`);
   await loginToRoblox();
+  client.login(token);
 });
