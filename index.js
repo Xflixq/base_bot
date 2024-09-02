@@ -8,6 +8,7 @@ const token = process.env.TOKEN;
 let playerName = ""
 let breakerName = ""
 let warnings = ""
+let responseLevel = ""
 
 const app = express();
 app.use(bodyParser.json());
@@ -56,12 +57,13 @@ client.once('ready', () => {
 // Bot Needed: https://discord.com/oauth2/authorize?client_id=1278140154787266612&permissions=2147559424&scope=bot%20applications.commands
 
 app.post('/sendModCall', async (req, res) => {
-    const { pn, bn, warningNo } = req.body;
+    const { pn, bn, warningNo, responseLevel } = req.body;
     const ping = process.env.PING
     try {
         playerName = pn
         breakerName = bn
         warnings = warningNo
+        responseLevel = responseLevel
         const channel = await client.channels.fetch(channelId);
 
         const message = await channel.send({
