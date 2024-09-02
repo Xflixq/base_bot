@@ -1,8 +1,8 @@
 const express = require("express");
 const noblox = require("noblox.js");
-const { Client, GatewayIntentBits, Partials } = require('discord.js');
+const { Client, GatewayIntentBits, Partials, ClientUser } = require('discord.js');
 const bodyParser = require('body-parser');
-const channelId = '1272217725883912192';
+const channelId = '1278080274869256288';
 const token = process.env.TOKEN;
 
 let playerName = "";
@@ -65,7 +65,7 @@ app.post('/sendModCall', async (req, res) => {
         const channel = await client.channels.fetch(channelId);
         const unformattedContent = `<@&${responseLevel}>`
         const message = await channel.send({
-            content: unformattedContent,
+            content: ``,
             embeds: [{
                 title: 'Moderator Call',
                 description: `Moderator called by: ${playerName}\nUsername of the rule breaker: ${breakerName}\nWarnings: ${warnings}\nStatus: Waiting :alarm_clock:`,
@@ -97,7 +97,7 @@ client.on('interactionCreate', async interaction => {
             content: '',
             embeds: [{
                 title: 'Moderator Call',
-                description: `Moderator called by: ${playerName}\nUsername of the rule breaker: ${breakerName}\nWarnings: ${warnings}\nStatus: Accepted :white_check_mark:`,
+                description: `Moderator called by: ${playerName}\nUsername of the rule breaker: ${breakerName}\nWarnings: ${warnings}\nStatus: Accepted by <@${interaction.user.id}> :white_check_mark:`,
                 color: 65280,
             }],
             components: [],
