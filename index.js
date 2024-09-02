@@ -5,10 +5,10 @@ const bodyParser = require('body-parser');
 const channelId = '1278080274869256288';
 const token = process.env.TOKEN;
 
-let playerName = ""
-let breakerName = ""
-let warnings = ""
-let responseLevel = ""
+let playerName = "";
+let breakerName = "";
+let warnings = "";
+let responseLevel = "";
 
 const app = express();
 app.use(bodyParser.json());
@@ -60,10 +60,10 @@ app.post('/sendModCall', async (req, res) => {
     const { pn, bn, warningNo, responseLevel } = req.body;
     const ping = process.env.PING
     try {
-        playerName = pn
-        breakerName = bn
-        warnings = warningNo
-        responseLevel = responseLevel
+        playerName = pn;
+        breakerName = bn;
+        warnings = warningNo;
+        responseLevel = responseLevel;
         const channel = await client.channels.fetch(channelId);
 
         const message = await channel.send({
