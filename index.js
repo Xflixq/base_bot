@@ -67,7 +67,7 @@ app.post('/sendModCall', async (req, res) => {
         const channel = await client.channels.fetch(channelId);
 
         const message = await channel.send({
-            content: '',
+            content: `<@&${responseLevel}}>`,
             embeds: [{
                 title: 'Moderator Call',
                 description: `Moderator called by: ${playerName}\nUsername of the rule breaker: ${breakerName}\nWarnings: ${warnings}\nPing: <@&${ping}> \nStatus: Waiting :alarm_clock:`,
