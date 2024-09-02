@@ -23,7 +23,6 @@ const client = new Client({
 async function loginToRoblox() {
   try {
     const cookie = process.env.COOKIE;
-    console.log(cookie)
     await noblox.setCookie(cookie);
     console.log("Logged into Roblox successfully.");
   } catch (error) {
