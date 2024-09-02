@@ -8,7 +8,6 @@ const token = process.env.TOKEN;
 let playerName = "";
 let breakerName = "";
 let warnings = "";
-let responseLevel = "";
 
 const app = express();
 app.use(bodyParser.json());
