@@ -2,7 +2,7 @@ const express = require("express");
 const noblox = require("noblox.js");
 const { Client, GatewayIntentBits, Partials } = require('discord.js');
 const bodyParser = require('body-parser');
-const channelId = '1278080274869256288';
+const channelId = '1272217725883912192';
 const token = process.env.TOKEN;
 
 let playerName = "";
